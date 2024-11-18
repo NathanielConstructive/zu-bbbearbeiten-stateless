@@ -28,7 +28,7 @@ repos:
       stages: [commit-msg]
 
   -   id: pytest-check
-      stages: [commit]
+      stages: [pre-commit]
       types: [python]
       name: pytest-check
       entry: python -m pytest
