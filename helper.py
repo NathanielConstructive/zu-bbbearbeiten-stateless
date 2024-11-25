@@ -1,50 +1,48 @@
-from dataclasses import dataclass
 import datetime
+import operator
+from dataclasses import dataclass
 
-# Globale Liste für To-Do-Items
 items = []
 
 
 @dataclass
 class Item:
     text: str
-    date: datetime.date
+    date: datetime
+    category: str
+    description: str
     isCompleted: bool = False
 
 
-def add(text, date_str):
-    """
-    Fügt ein neues To-Do hinzu und sortiert die Liste nach Datum.
-    """
-    # Text verarbeiten (B --> Bbb)
-    text = text.replace('b', 'bbb').replace('B', 'Bbb')
+def oneWeekFromToday():
+    today = datetime.datetime.now()
+    oneWeek = datetime.timedelta(weeks=1)
+    return today + oneWeek
 
-    # Datum parsen
-    date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
 
-    # Item erstellen und hinzufügen
-    items.append(Item(text, date))
+def add(text, date=None, category=None, description=None):
+    text = text.replace("b", "bbb").replace("B", "Bbb")
+    if date is None:
+        date = oneWeekFromToday()
+    else:
+        date = datetime.datetime.strptime(date, "%Y-%m-%d")
 
-    # Liste nach Datum sortieren
-    items.sort(key=lambda x: x.date)
+    if category is None:
+        category = "default"
+
+    if description is None:
+        description = ""
+    items.append(Item(text, date, category, description))
+    items.sort(key=lambda x: (x.date, x.category))
 
 
 def get_all():
-    """
-    Gibt alle To-Do-Items zurück.
-    """
     return items
 
 
 def get(index):
-    """
-    Gibt ein bestimmtes To-Do anhand seines Indexes zurück.
-    """
     return items[index]
 
 
 def update(index):
-    """
-    Aktualisiert den Status eines To-Do-Items (Completed/Not Completed).
-    """
     items[index].isCompleted = not items[index].isCompleted
