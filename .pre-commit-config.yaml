@@ -16,6 +16,8 @@ repos:
   - id: trailing-whitespace
   - id: flake8
 
+
+
 - repo: local
   hooks:
   -   id: needs-hash
@@ -26,7 +28,7 @@ repos:
       stages: [commit-msg]
 
   -   id: pytest-check
-      stages: [pre-commit]
+      stages: [commit]
       types: [python]
       name: pytest-check
       entry: python -m pytest
