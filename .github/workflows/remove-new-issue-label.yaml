@@ -1,0 +1,25 @@
+name: Remove Label on Assignment
+
+on:
+  issues:
+    types:
+      - assigned
+
+jobs:
+  remove-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const labelToRemove = 'label-to-remove';
+            
+            github.rest.issues.removeLabel({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["status: new issue"]
+            })
