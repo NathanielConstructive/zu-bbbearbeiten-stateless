@@ -6,7 +6,7 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Arbeitsverzeichnis im Container setzen
+# Arbeitsverzeichnis im Container setzen.
 WORKDIR /app
 
 # Kopiere die Anforderungen in den Container
